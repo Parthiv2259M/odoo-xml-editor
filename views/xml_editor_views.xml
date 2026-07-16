@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- XML Editor Config Tree View -->
+        <record id="view_xml_editor_config_tree" model="ir.ui.view">
+            <field name="name">XML Editor Config - Tree</field>
+            <field name="model">xml.editor.config</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="view_id"/>
+                    <field name="view_type"/>
+                    <field name="is_modified"/>
+                    <field name="last_modified_by"/>
+                    <field name="last_modified_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- XML Editor Config Form View -->
+        <record id="view_xml_editor_config_form" model="ir.ui.view">
+            <field name="name">XML Editor Config - Form</field>
+            <field name="model">xml.editor.config</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="apply_changes" string="Apply Changes" type="object" class="btn-primary"
+                                attrs="{'invisible': [('is_modified', '=', False)]}"/>
+                        <button name="revert_to_original" string="Revert" type="object"
+                                attrs="{'invisible': [('is_modified', '=', False)]}"/>
+                        <field name="status" widget="statusbar" options="{'clickable': True}"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="view_id" readonly="1"/>
+                                <field name="view_type" readonly="1"/>
+                                <field name="model_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="is_modified" readonly="1"/>
+                                <field name="last_modified_by" readonly="1"/>
+                                <field name="last_modified_date" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <separator string="XML Content"/>
+                        <notebook>
+                            <page string="Original XML" name="original">
+                                <field name="original_xml" widget="ace" options="{'mode': 'xml'}"/>
+                            </page>
+                            <page string="Modified XML" name="modified">
+                                <field name="modified_xml" widget="ace" options="{'mode': 'xml'}"/>
+                            </page>
+                        </notebook>
+
+                        <separator string="Element Structure"/>
+                        <field name="element_ids">
+                            <tree>
+                                <field name="tag_name"/>
+                                <field name="attributes"/>
+                                <field name="depth"/>
+                                <field name="order"/>
+                            </tree>
+                        </field>
+
+                        <separator string="Change History"/>
+                        <field name="change_log_ids">
+                            <tree>
+                                <field name="changed_by"/>
+                                <field name="created_date"/>
+                                <field name="change_type"/>
+                                <field name="description"/>
+                            </tree>
+                        </field>
+
+                        <separator string="Description"/>
+                        <field name="description" nolabel="1"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- XML Editor Config Search View -->
+        <record id="view_xml_editor_config_search" model="ir.ui.view">
+            <field name="name">XML Editor Config - Search</field>
+            <field name="model">xml.editor.config</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="view_id"/>
+                    <field name="model_id"/>
+                    <filter name="modified" string="Modified" domain="[('is_modified', '=', True)]"/>
+                    <filter name="active" string="Active" domain="[('status', '=', 'active')]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_view_type" string="View Type" context="{'group_by': 'view_type'}"/>
+                        <filter name="group_by_status" string="Status" context="{'group_by': 'status'}"/>
+                        <filter name="group_by_model" string="Model" context="{'group_by': 'model_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- XML Editor Element Form View -->
+        <record id="view_xml_editor_element_form" model="ir.ui.view">
+            <field name="name">XML Editor Element - Form</field>
+            <field name="model">xml.editor.element</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="tag_name"/>
+                                <field name="depth" readonly="1"/>
+                                <field name="order"/>
+                            </group>
+                            <group>
+                                <field name="parent_element_id"/>
+                                <field name="created_date" readonly="1"/>
+                            </group>
+                        </group>
+                        <separator string="Attributes"/>
+                        <field name="attributes" widget="ace" options="{'mode': 'json'}"/>
+                        <separator string="Content"/>
+                        <field name="text_content" nolabel="1"/>
+                        <separator string="Child Elements"/>
+                        <field name="child_element_ids">
+                            <tree>
+                                <field name="tag_name"/>
+                                <field name="order"/>
+                            </tree>
+                        </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- XML Editor Element Tree View -->
+        <record id="view_xml_editor_element_tree" model="ir.ui.view">
+            <field name="name">XML Editor Element - Tree</field>
+            <field name="model">xml.editor.element</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="tag_name"/>
+                    <field name="depth" invisible="1"/>
+                    <field name="order"/>
+                    <field name="parent_element_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- XML Editor Change Log Tree View -->
+        <record id="view_xml_editor_change_log_tree" model="ir.ui.view">
+            <field name="name">XML Editor Change Log - Tree</field>
+            <field name="model">xml.editor.change.log</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="changed_by"/>
+                    <field name="created_date"/>
+                    <field name="change_type"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- XML Editor Change Log Form View -->
+        <record id="view_xml_editor_change_log_form" model="ir.ui.view">
+            <field name="name">XML Editor Change Log - Form</field>
+            <field name="model">xml.editor.change.log</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="rollback" string="Rollback to This Version" type="object" class="btn-primary"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="changed_by" readonly="1"/>
+                                <field name="created_date" readonly="1"/>
+                                <field name="change_type" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="config_id" readonly="1"/>
+                            </group>
+                        </group>
+                        <separator string="Description"/>
+                        <field name="description" nolabel="1" readonly="1"/>
+                        <separator string="Previous XML"/>
+                        <field name="previous_xml" widget="ace" options="{'mode': 'xml'}" readonly="1"/>
+                        <separator string="New XML"/>
+                        <field name="new_xml" widget="ace" options="{'mode': 'xml'}" readonly="1"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

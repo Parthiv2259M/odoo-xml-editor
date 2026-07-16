@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_xml_editor_config_user,XML Editor Config - User,model_xml_editor_config,base.group_user,1,1,1,1
+access_xml_editor_element_user,XML Editor Element - User,model_xml_editor_element,base.group_user,1,1,1,1
+access_xml_editor_change_log_user,XML Editor Change Log - User,model_xml_editor_change_log,base.group_user,1,0,0,0
+access_xml_editor_config_admin,XML Editor Config - Admin,model_xml_editor_config,base.group_system,1,1,1,1
+access_xml_editor_element_admin,XML Editor Element - Admin,model_xml_editor_element,base.group_system,1,1,1,1
+access_xml_editor_change_log_admin,XML Editor Change Log - Admin,model_xml_editor_change_log,base.group_system,1,1,1,1

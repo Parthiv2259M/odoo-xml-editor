@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Menu Item for XML Editor -->
+        <menuitem
+            id="menu_xml_editor_root"
+            name="XML Editor"
+            sequence="100"
+            web_icon="xml_editor,static/description/icon.png"/>
+
+        <!-- Submenu: View Configurations -->
+        <menuitem
+            id="menu_xml_editor_config"
+            name="View Configurations"
+            parent="menu_xml_editor_root"
+            action="action_xml_editor_config"
+            sequence="10"/>
+
+        <!-- Submenu: Change History -->
+        <menuitem
+            id="menu_xml_editor_history"
+            name="Change History"
+            parent="menu_xml_editor_root"
+            action="action_xml_editor_change_log"
+            sequence="20"/>
+
+        <!-- Action for XML Editor Config -->
+        <record id="action_xml_editor_config" model="ir.actions.act_window">
+            <field name="name">XML Editor Configuration</field>
+            <field name="res_model">xml.editor.config</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new XML editor configuration.
+                </p>
+            </field>
+        </record>
+
+        <!-- Action for XML Editor Change Log -->
+        <record id="action_xml_editor_change_log" model="ir.actions.act_window">
+            <field name="name">Change History</field>
+            <field name="res_model">xml.editor.change.log</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>
